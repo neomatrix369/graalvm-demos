@@ -27,9 +27,9 @@ variable "num_instances" {
   default = "2"
 }
 
-
+// https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm#vmshapes
 variable "instance_shape" {
-  default = "VM.Standard1.2"
+  default = "VM.Standard2.1"
 }
 
 variable "instance_image_ocid" {
@@ -97,7 +97,7 @@ resource "oci_core_security_list" "graalvm_hosts_security_list" {
   // allow inbound http traffic on specific ports 8080-8085
   ingress_security_rules {
     protocol  = "6"         // tcp
-    source    = "10.1.0.0/16"
+    source    = "0.0.0.0/0"
     stateless = false
 
     tcp_options {
@@ -107,7 +107,7 @@ resource "oci_core_security_list" "graalvm_hosts_security_list" {
     }
   }
 
-  // allow inbound http traffic on specific ports 8080-8085
+  // allow inbound http traffic on a specific port 8443
   ingress_security_rules {
     protocol  = "6"         // tcp
     source    = "10.1.0.0/16"
